@@ -1,22 +1,21 @@
-// UI controller module (placeholder for now)
-
-import { parseNum, formatMoney } from "./utils.js";
-import { fetchRates } from "./api.js";
+// src/ui.js
+// Deal Checker v9 – UI inicializacija
 
 export function initUI() {
-    console.log("UI initialized");
-}
+  const app = document.getElementById("app");
 
-export function attachEvents() {
-    console.log("UI events attached");
-}
+  app.innerHTML = `
+    <header>
+      <h1>Deal Checker v9</h1>
+      <small>Nauja modulinė architektūra • PRO Beta</small>
+    </header>
 
-export async function refreshRates() {
-    const data = await fetchRates();
-    if (data.error) {
-        alert("Nepavyko gauti valiutų kursų: " + data.error);
-        return;
-    }
-
-    console.log("Kursai gauti:", data);
+    <main>
+      <div class="card placeholder">
+        <p><strong>UI skeleto režimas.</strong></p>
+        <p>Čia atsiras visas tavo V7 UI, padalintas į komponentus.</p>
+        <p>Toliau pjausime ir perkelsime realų interface.</p>
+      </div>
+    </main>
+  `;
 }
