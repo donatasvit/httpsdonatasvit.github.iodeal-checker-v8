@@ -1,21 +1,57 @@
-// src/ui.js
-// Deal Checker v9 – UI inicializacija
+// =======================
+// Deal Checker v8 – UI MODULE
+// Visi DOM event'ai ir sąsaja su core + api
+// =======================
 
+import {
+  parseNum,
+  calcCBM,
+  calcAirTotals,
+  calcSeaTotals,
+  calcRevenue
+} from "./core.js";
+
+import {
+  fetchRates,
+  getDemoTariff,
+  sendDealToServer
+} from "./api.js";
+
+// =======================================
+// Būsimas v7 UI perkėlimas eis čia
+// =======================================
+
+// Mini logger
+function log(msg) {
+  console.log("%c[UI]", "color:#2563eb;font-weight:600;", msg);
+}
+
+// Inicializacija
 export function initUI() {
-  const app = document.getElementById("app");
+  log("UI inicializuotas (skeleton mode)");
 
-  app.innerHTML = `
-    <header>
-      <h1>Deal Checker v9</h1>
-      <small>Nauja modulinė architektūra • PRO Beta</small>
-    </header>
+  // Čia bus:
+  // - cargo row rendering
+  // - transporto skaičiavimai
+  // - costs
+  // - multimodal
+  // - archive loader
+  // - margin logic
+  // - client text generator
+  // - API jungimai
 
-    <main>
-      <div class="card placeholder">
-        <p><strong>UI skeleto režimas.</strong></p>
-        <p>Čia atsiras visas tavo V7 UI, padalintas į komponentus.</p>
-        <p>Toliau pjausime ir perkelsime realų interface.</p>
-      </div>
-    </main>
-  `;
+  // Laikinas test mygtukas (kol nėra tikro UI):
+  const testBtn = document.createElement("button");
+  testBtn.textContent = "TEST: Gauti valiutas";
+  testBtn.style.padding = "10px";
+  testBtn.style.marginTop = "20px";
+  testBtn.style.fontSize = "16px";
+
+  testBtn.onclick = async () => {
+    log("Kviečiam valiutų API…");
+    const res = await fetchRates();
+    console.log("Gauti kursai:", res);
+  };
+
+  document.body.appendChild(testBtn);
 }
