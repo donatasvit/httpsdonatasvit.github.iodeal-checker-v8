@@ -1,6 +1,9 @@
-// src/api.js
-// Universalus API adapteris Deal Checker v9
+// =======================
+// Deal Checker v8 – API MODULE
+// Visi API kvietimai eina pro vieną adapterį
+// =======================
 
+// Universalus API adapteris
 export async function apiRequest(url, method = "GET", data = null, token = null) {
   try {
     const options = {
@@ -8,33 +11,50 @@ export async function apiRequest(url, method = "GET", data = null, token = null)
       headers: { "Content-Type": "application/json" }
     };
 
-    if (token) options.headers["Authorization"] = "Bearer " + token;
-    if (data) options.body = JSON.stringify(data);
+    if (token) {
+      options.headers["Authorization"] = "Bearer " + token;
+    }
+
+    if (data) {
+      options.body = JSON.stringify(data);
+    }
 
     const res = await fetch(url, options);
-
-    if (!res.ok) {
-      throw new Error(`API klaida: ${res.status} (${res.statusText})`);
-    }
+    if (!res.ok) throw new Error("API klaida: " + res.status);
 
     return await res.json();
   } catch (err) {
-    console.error("API ERROR:", err.message);
     return { error: err.message };
   }
 }
 
-// --- Valiutų kursų API ---
-export async function fetchFxRates() {
-  return apiRequest("https://api.exchangerate.host/latest?base=EUR");
+// =======================
+// Valiutų API (PRO ready)
+// =======================
+
+export async function fetchRates() {
+  const url = "https://api.exchangerate.host/latest?base=EUR";
+  return await apiRequest(url);
 }
 
-// --- Demo transporto tarifas ---
-export async function fetchDemoTariff() {
-  return apiRequest("https://jsonplaceholder.typicode.com/posts/1");
+// =======================
+// DEMO – transporto tarifas
+// =======================
+
+export async function getDemoTariff() {
+  // čia tik placeholder demo API
+  return await apiRequest("https://jsonplaceholder.typicode.com/posts/1");
 }
 
-// --- Demo deal POST (ateityje pakeisime realiu) ---
-export async function postDealDemo(deal) {
-  return apiRequest("https://example.com/api/saveDeal", "POST", deal);
+// =======================
+// Demo POST /saveDeal
+// =======================
+
+export async function sendDealToServer(deal) {
+  return await apiRequest(
+    "https://example.com/api/saveDeal",
+    "POST",
+    deal,
+    "DEMO_TOKEN"
+  );
 }
